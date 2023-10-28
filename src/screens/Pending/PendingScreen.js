@@ -1,42 +1,44 @@
-import React, { useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { FlatList, Text, View, TouchableHighlight, Image } from "react-native";
 import styles from "./styles";
-import { getRecipes, getCategoryName } from "../../data/MockDataAPI";
+import DocumentsApi from "../documents/api/api";
+import { useAuth } from "../Login/utils/store";
 
 export default function PendingScreen(props) {
-  const { navigation, route } = props;
-
-  const item = route?.params?.category;
-  const recipesArray = getRecipes(item.id);
+  const { token, profile } = useAuth();
+  const [documents, setDocuments] = useState([]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params?.title,
-      headerRight: () => <View />,
-    });
-  }, []);
-
-  const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
-  };
+    const fetchData = async () => {
+      const documentsApi = new DocumentsApi(
+        token,
+        profile.department.id,
+        profile.title.id
+      );
+      const pendingDocuments = await documentsApi.queries.getPendingDocuments();
+      setDocuments(pendingDocuments.data);
+      console.log(pendingDocuments);
+    };
+    fetchData();
+  }, [token, profile.department.id, profile.title.id]);
 
   const renderRecipes = ({ item }) => (
-    <TouchableHighlight
-      underlayColor="rgba(73,182,77,0.9)"
-      onPress={() => onPressRecipe(item)}
-    >
+    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)">
       <View
         style={{
           borderColor: "black",
-          borderWidth: "2px",
+          borderWidth: 2,
           marginLeft: "2%",
           marginRight: "2%",
         }}
       >
-        <Text>{item.photo_url}</Text>
-        <Text>{item.title}</Text>
-        <TableCellItem label="Θέμα" value={item.title} />
-        <Text>{getCategoryName(item.categoryId)}</Text>
+        <TableCellItem label="Προτεραιότητα" value={item.priority} />
+        <TableCellItem label="Διαβάθμιση" value={item.classification} />
+        <TableCellItem label="Τύπος" value={item.type} />
+        <TableCellItem label="Θέμα" value={item.subject} />
+        <TableCellItem label="Εκδότης" value={item.publisher} />
+        <TableCellItem label="Συντάκτης" value={item.author} />
+        <TableCellItem label="Ημ. Έκδοσης" value={item.date} />
       </View>
     </TouchableHighlight>
   );
@@ -47,9 +49,9 @@ export default function PendingScreen(props) {
         vertical
         showsVerticalScrollIndicator={false}
         numColumns={1}
-        data={recipesArray}
+        data={documents}
         renderItem={renderRecipes}
-        keyExtractor={(item) => `${item.recipeId}`}
+        keyExtractor={(item) => `${item.id}`}
       />
     </View>
   );

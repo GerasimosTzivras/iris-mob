@@ -5,6 +5,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+.expo
+
 # Runtime data
 pids
 *.pid

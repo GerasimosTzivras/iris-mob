@@ -45,7 +45,7 @@ export default function DrawerContainer(props) {
           title="Εργασίες"
           source={require("../../../assets/icons/category.png")}
           onPress={() => {
-            navigation.navigate("Tasks");
+            navigation.navigate("Pending");
             navigation.closeDrawer();
           }}
         />

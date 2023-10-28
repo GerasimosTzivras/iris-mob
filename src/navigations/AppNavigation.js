@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -14,6 +14,9 @@ import CreateScreen from "../screens/Create/CreateScreen";
 import DocumentsMenuScreen from "../screens/DocumentsMenu/DocumentsMenuScreen";
 import ToolsMenuScreen from "../screens/ToolsMenu/ToolsMenuScreen";
 import PendingScreen from "../screens/Pending/PendingScreen";
+import LoginScreen from "../screens/Login/LoginScreen";
+import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const Stack = createStackNavigator();
 
@@ -30,7 +33,7 @@ function MainNavigator() {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Create" component={CreateScreen} />
+      <Stack.Screen name="Create" component={LoginScreen} />
       <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Documents" component={DocumentsMenuScreen} />
       <Stack.Screen name="Tasks" component={CategoriesScreen} />
@@ -38,6 +41,7 @@ function MainNavigator() {
       <Stack.Screen name="Recipe" component={RecipeScreen} />
       <Stack.Screen name="RecipesList" component={RecipesListScreen} />
       <Stack.Screen name="Pending" component={PendingScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
 
       <Stack.Screen name="Ingredient" component={IngredientScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
@@ -68,12 +72,28 @@ function DrawerStack() {
     </Drawer.Navigator>
   );
 }
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+      suspense: true,
+    },
+  },
+});
 
 export default function AppContainer() {
   return (
-    <NavigationContainer>
-      <DrawerStack />
-    </NavigationContainer>
+    <RecoilRoot>
+      {/* <Suspense> */}
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <DrawerStack />
+        </QueryClientProvider>
+      </NavigationContainer>
+      {/* </Suspense> */}
+    </RecoilRoot>
   );
 }
 
