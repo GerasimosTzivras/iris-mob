@@ -13,6 +13,7 @@ import IngredientsDetailsScreen from "../screens/IngredientsDetails/IngredientsD
 import CreateScreen from "../screens/Create/CreateScreen";
 import DocumentsMenuScreen from "../screens/DocumentsMenu/DocumentsMenuScreen";
 import ToolsMenuScreen from "../screens/ToolsMenu/ToolsMenuScreen";
+import PendingScreen from "../screens/Pending/PendingScreen";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,8 @@ function MainNavigator() {
       <Stack.Screen name="Tools" component={ToolsMenuScreen} />
       <Stack.Screen name="Recipe" component={RecipeScreen} />
       <Stack.Screen name="RecipesList" component={RecipesListScreen} />
+      <Stack.Screen name="Pending" component={PendingScreen} />
+
       <Stack.Screen name="Ingredient" component={IngredientScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen

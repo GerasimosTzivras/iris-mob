@@ -31,7 +31,7 @@ export default function ToolsMenuScreen(props) {
   const onPressCategory = (item) => {
     const title = item.name;
     const category = item;
-    navigation.navigate("RecipesList", { category, title });
+    navigation.navigate("Pending", { category, title });
   };
 
   const renderCategory = ({ item }) => (
