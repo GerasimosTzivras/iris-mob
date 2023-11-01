@@ -9,4 +9,7 @@ export default class DocumentQueries {
   public async getPendingDocuments(): Promise<any> {
     return await this.client.get(`/documents/pending`);
   }
+  public async getDocument(id: string): Promise<any> {
+    return await this.client.get<any>(`/documents/${id}`)
+  }
 }

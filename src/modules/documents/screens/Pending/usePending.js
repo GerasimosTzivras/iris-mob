@@ -1,7 +1,7 @@
 import { startTransition } from "react";
-import { useQuery } from "../../shared/hooks/useQuery";
-import { useAuth } from "../Login/utils/store";
-import DocumentsApi from "../documents/api/api";
+import { useQuery } from "../../../../shared/hooks/useQuery";
+import { useAuth } from "../../../../screens/Login/utils/store";
+import DocumentsApi from "../../../../screens/documents/api/api";
 
 export default function usePending() {
   const { token, profile } = useAuth();

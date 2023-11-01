@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -13,10 +13,13 @@ import IngredientsDetailsScreen from "../screens/IngredientsDetails/IngredientsD
 import CreateScreen from "../screens/Create/CreateScreen";
 import DocumentsMenuScreen from "../screens/DocumentsMenu/DocumentsMenuScreen";
 import ToolsMenuScreen from "../screens/ToolsMenu/ToolsMenuScreen";
-import PendingScreen from "../screens/Pending/PendingScreen";
 import LoginScreen from "../screens/Login/LoginScreen";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
+const PendingScreen = lazy(() =>
+  import("../modules/documents/screens/Pending/PendingScreen")
+);
+const ViewScreen = lazy(() => import("../modules/documents/screens/View"));
 
 const Stack = createStackNavigator();
 
@@ -32,7 +35,7 @@ function MainNavigator() {
         },
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Home" component={PendingScreen} />
       <Stack.Screen name="Create" component={LoginScreen} />
       <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Documents" component={DocumentsMenuScreen} />
@@ -42,7 +45,7 @@ function MainNavigator() {
       <Stack.Screen name="RecipesList" component={RecipesListScreen} />
       <Stack.Screen name="Pending" component={PendingScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-
+      <Stack.Screen name="ViewDocument" component={ViewScreen} />
       <Stack.Screen name="Ingredient" component={IngredientScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen
@@ -86,14 +89,22 @@ const queryClient = new QueryClient({
 export default function AppContainer() {
   return (
     <RecoilRoot>
-      {/* <Suspense> */}
-      <NavigationContainer>
-        <QueryClientProvider client={queryClient}>
-          <DrawerStack />
-        </QueryClientProvider>
-      </NavigationContainer>
-      {/* </Suspense> */}
+      <Suspense fallback={<LoadingFallback />}>
+        <NavigationContainer>
+          <QueryClientProvider client={queryClient}>
+            <DrawerStack />
+          </QueryClientProvider>
+        </NavigationContainer>
+      </Suspense>
     </RecoilRoot>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div>
+      <p>Loading...</p>
+    </div>
   );
 }
 
