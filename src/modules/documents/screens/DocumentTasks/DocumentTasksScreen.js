@@ -59,9 +59,7 @@ export default function PendingScreen(props) {
         profile.department.id,
         profile.title.id
       );
-      const pendingDocuments = await documentsApi.queries.getPendingDocuments(
-        pagination
-      );
+      const pendingDocuments = await documentsApi.queries.getPendingDocuments();
       setDocuments(pendingDocuments.data);
       setPagination(pendingDocuments.pagination);
       console.log(pendingDocuments);

@@ -7,7 +7,7 @@ import { usePagination } from "../../usePagination";
 import PageSizesSelect from "../PageSizesSelect";
 import PaginationLinks from "../PaginationLinks";
 
-export default function PendingScreen(props) {
+export default function InProgressScreen(props) {
   const { token, profile } = useAuth();
   const [documents, setDocuments] = useState([]);
   const [pagination, setPagination] = useState({});
@@ -59,9 +59,7 @@ export default function PendingScreen(props) {
         profile.department.id,
         profile.title.id
       );
-      const pendingDocuments = await documentsApi.queries.getPendingDocuments(
-        pagination
-      );
+      const pendingDocuments = await documentsApi.queries.getPendingDocuments();
       setDocuments(pendingDocuments.data);
       setPagination(pendingDocuments.pagination);
       console.log(pendingDocuments);

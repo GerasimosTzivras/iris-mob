@@ -19,23 +19,17 @@ import { QueryClient, QueryClientProvider } from "react-query";
 const PendingScreen = lazy(() =>
   import("../modules/documents/screens/Pending/PendingScreen")
 );
+const InfoScreen = lazy(() =>
+  import("../modules/documents/screens/Info/InfoScreen")
+);
 const ViewScreen = lazy(() => import("../modules/documents/screens/View"));
 
 const Stack = createStackNavigator();
 
 function MainNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleStyle: {
-          fontWeight: "bold",
-          textAlign: "center",
-          alignSelf: "center",
-          flex: 1,
-        },
-      }}
-    >
-      <Stack.Screen name="Home" component={PendingScreen} />
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={LoginScreen} />
       <Stack.Screen name="Create" component={LoginScreen} />
       <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Documents" component={DocumentsMenuScreen} />
@@ -44,6 +38,7 @@ function MainNavigator() {
       <Stack.Screen name="Recipe" component={RecipeScreen} />
       <Stack.Screen name="RecipesList" component={RecipesListScreen} />
       <Stack.Screen name="Pending" component={PendingScreen} />
+      <Stack.Screen name="Info" component={InfoScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="ViewDocument" component={ViewScreen} />
       <Stack.Screen name="Ingredient" component={IngredientScreen} />

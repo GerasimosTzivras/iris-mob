@@ -18,61 +18,73 @@ export const documentsMenu = [
     id: 4,
     name: "Για ενέργεια (Εισερχόμενα)",
     icon: "activity",
+    page: "Action",
   },
   {
     id: 5,
     name: "Για κοινοποίηση (Εισερχόμενα)",
     icon: "info-square",
+    page: "Info",
   },
   {
     id: 6,
     name: "Για Υπογραφή (Εξερχόμενα)",
     icon: "pen",
+    page: "Pending",
   },
   {
     id: 7,
     name: "Σε εξέλιξη (Εξερχόμενα)",
     icon: "graph-up-arrow",
+    page: "InProgress",
   },
   {
     id: 8,
     name: "Για διανομή (Εξερχόμενα)",
     icon: "send",
+    page: "Distribution",
   },
   {
     id: 9,
     name: "Απορριφθέντα (Εξερχόμενα)",
     icon: "x-square",
+    page: "Rejection",
   },
   {
     id: 10,
     name: "Εισερχόμενα (Αρχείο)",
     icon: "inboxes",
+    page: "Archived",
   },
   {
     id: 11,
     name: "Υπογεγραμμένα (Αρχείο)",
     icon: "folder-symlink",
+    page: "Distributed",
   },
   {
     id: 12,
     name: "Απορριφθέντα (Αρχείο)",
     icon: "x-square",
+    page: "Rejected",
   },
   {
     id: 13,
     name: "Από Εργασίες (Αρχείο)",
     icon: "calendar2-check",
+    page: "Tasked",
   },
   {
     id: 14,
     name: "Εισαχθέντα (Αρχείο)",
     icon: "file-earmark-arrow-up",
+    page: "Imported",
   },
   {
     id: 15,
     name: "Ενημερωτικά (Αρχείο)",
     icon: "box",
+    page: "ArchivedMaster",
   },
 ];
 

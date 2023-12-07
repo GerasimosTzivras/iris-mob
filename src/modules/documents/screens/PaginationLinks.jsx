@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 import { Icon } from "@rneui/themed";
+import { Button } from "@rneui/base";
 
 function PaginationLinks({ page = 1, pages = 1, onClick }) {
   const links = useMemo(
@@ -27,7 +28,7 @@ function PaginationLinks({ page = 1, pages = 1, onClick }) {
         disabled: page === pages || pages === 0,
       },
       {
-        icon: "verticleleft",
+        icon: "back",
         tooltip: "last",
         page: pages,
         active: page === pages,
@@ -40,15 +41,15 @@ function PaginationLinks({ page = 1, pages = 1, onClick }) {
   return (
     <div className={clsx("btn-group", "btn-group-sm")}>
       {links.map((link) => (
-        <button
+        <Button
           key={link.icon}
           className={clsx("btn", "btn-outline-secondary", "d-flex")}
           title={link.tooltip}
           disabled={link.disabled}
           onClick={() => onClick(link.page)}
         >
-          <Icon name="sc-telegram" />
-        </button>
+          <Icon name="save" color="white" />
+        </Button>
       ))}
     </div>
   );

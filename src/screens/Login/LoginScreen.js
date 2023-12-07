@@ -1,69 +1,24 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import {
   SafeAreaView,
-  StyleSheet,
-  TextInput,
   Text,
   View,
   Button,
-  TouchableHighlight,
-  Image,
+  ImageBackground,
+  BackHandler,
 } from "react-native";
-import styles from "./styles";
-import { recipes } from "../../data/dataArrays";
-import MenuImage from "../../components/MenuImage/MenuImage";
-import { getCategoryName } from "../../data/MockDataAPI";
-import { SelectList } from "react-native-dropdown-select-list";
-import Label from "../../shared/components/Label/Label";
+
 import useLogin from "./useLogin";
+import { Input } from "@rneui/base";
+import { useAuth } from "./utils/store";
 
 export default function LoginScreen(props) {
   const { navigation } = props;
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [password, onChangePassword] = React.useState("Useless Text");
-  const [number, onChangeNumber] = React.useState("");
-  const [isEnabled, setIsEnabled] = React.useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const [selected, setSelected] = React.useState("");
+  const { token, profile } = useAuth();
+  const [text, onChangeText] = React.useState("");
+  const [password, onChangePassword] = React.useState("");
   const { loading, error, onSubmit } = useLogin();
-  const data = [
-    { key: "1", value: "Mobiles", disabled: true },
-    { key: "2", value: "Appliances" },
-    { key: "3", value: "Cameras" },
-    { key: "4", value: "Computers", disabled: true },
-    { key: "5", value: "Vegetables" },
-    { key: "6", value: "Diary Products" },
-    { key: "7", value: "Drinks" },
-  ];
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
-      ),
-      headerRight: () => <View />,
-    });
-  }, []);
 
-  const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
-  };
-
-  const renderRecipes = ({ item }) => (
-    <TouchableHighlight
-      underlayColor="rgba(73,182,77,0.9)"
-      onPress={() => onPressRecipe(item)}
-    >
-      <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
-      </View>
-    </TouchableHighlight>
-  );
   function handleSubmit(evt) {
     evt.preventDefault();
     const validated = Object.assign({
@@ -71,11 +26,14 @@ export default function LoginScreen(props) {
       password: password,
     });
     onSubmit(validated);
+    if (token) {
+      navigation.navigate("Documents");
+    }
   }
 
   return (
     <SafeAreaView>
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         onChangeText={onChangeText}
         value={text}
@@ -90,7 +48,83 @@ export default function LoginScreen(props) {
         title="Learn More"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
-      />
+      /> */}
+      <ImageBackground
+        source={require("../../shared/assets/login-wallpaper.jpg")}
+        style={{ height: "100vh", width: "100%" }}
+      >
+        <View style={{ alignSelf: "center", width: "80%", marginTop: "20%" }}>
+          <Text
+            style={{
+              color: "#1890ff",
+              fontSize: 20,
+              alignSelf: "center",
+              color: "white",
+            }}
+          >
+            Iris
+          </Text>
+          <Text
+            style={{
+              color: "#1890ff",
+              fontSize: 10,
+              alignSelf: "center",
+              color: "white",
+              marginBottom: "10%",
+            }}
+          >
+            Σύστημα Ηλεκτρονικής Διαχείρισης Εγγράφων
+          </Text>
+
+          <Input
+            placeholder="Όνομα χρήστη"
+            value={text}
+            inputContainerStyle={{ borderBottomColor: "white" }}
+            onChangeText={onChangeText}
+            autoCompleteType="username"
+            textContentType="username"
+            inputStyle={{ color: "white" }}
+            placeholderTextColor="white"
+            keyboardType="email-address"
+          />
+
+          <Input
+            placeholder="Κωδικός"
+            value={password}
+            inputContainerStyle={{ borderBottomColor: "white" }}
+            onChangeText={onChangePassword}
+            autoCompleteType="password"
+            textContentType="password"
+            inputStyle={{ color: "white" }}
+            placeholderTextColor="white"
+            keyboardType="number-pad"
+          />
+          <Button
+            color="danger"
+            title="Έξοδος"
+            onPress={() => BackHandler.exitApp()}
+          />
+
+          <Button
+            type="outline"
+            color="primary"
+            onPress={handleSubmit}
+            title="Σύνδεση"
+          />
+        </View>
+        <View>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 10,
+              alignSelf: "center",
+              marginTop: "25%",
+            }}
+          >
+            © 2023, Κέντρο Μηχανογράφησης Γενικού Επιτελείου Αεροπορίας
+          </Text>
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }

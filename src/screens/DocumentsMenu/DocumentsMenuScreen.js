@@ -34,10 +34,16 @@ export default function DocumentsMenuScreen(props) {
     navigation.navigate("RecipesList", { category, title });
   };
 
+  const onPressCategoryUp = (item) => {
+    const title = item.name;
+    const category = item;
+    navigation.navigate(item.page);
+  };
+
   const renderCategory = ({ item }) => (
     <TouchableHighlight
       underlayColor="rgba(73,182,77,0.9)"
-      onPress={() => onPressCategory(item)}
+      onPress={() => onPressCategoryUp(item)}
     >
       <View style={styles.categoriesItemContainer}>
         {/* <Image
